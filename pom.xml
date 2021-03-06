@@ -15,6 +15,7 @@
     <modules>
         <module>iron-sheep-wallet-s1</module>
         <module>iron-sheep-wallet-s2</module>
+        <module>iron-sheep-wallet-domain</module>
     </modules>
 
     <properties>
