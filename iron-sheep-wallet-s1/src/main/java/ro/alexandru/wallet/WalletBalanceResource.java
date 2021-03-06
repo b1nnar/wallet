@@ -1,5 +1,7 @@
 package ro.alexandru.wallet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -13,10 +15,12 @@ import java.util.List;
 @Path("balance")
 public class WalletBalanceResource {
 
+    private static final Logger LOG = LoggerFactory.getLogger(WalletBalanceResource.class);
+
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getBalance() {
-        System.out.println("getting balance");
+        LOG.info("Getting balance");
         Sql2o sql2o = new Sql2o("jdbc:postgresql://localhost:5434/iron_sheep_wallet", "iron_sheep", "iron_sheep");
         List<Wallet> wallets;
         try (Connection con = sql2o.open()) {
