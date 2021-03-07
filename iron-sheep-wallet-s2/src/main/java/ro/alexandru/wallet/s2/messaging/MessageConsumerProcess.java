@@ -21,7 +21,7 @@ public class MessageConsumerProcess<T> {
 
     public void start() {
         if (executor.isShutdown()) {
-            throw new MessagingException("Could not start message consumer process, the executor is shut down");
+            throw new MessageConsumerException("Could not start message consumer process, the executor is shut down");
         }
         scheduledFuture = executor.scheduleAtFixedRate(this::consumeAndProcessNextMessage, 0, 1, TimeUnit.SECONDS);
     }
@@ -36,6 +36,7 @@ public class MessageConsumerProcess<T> {
     public void shutdown() {
         stop();
         executor.shutdown();
+        messageConsumer.close();
     }
 
     private void consumeAndProcessNextMessage() {

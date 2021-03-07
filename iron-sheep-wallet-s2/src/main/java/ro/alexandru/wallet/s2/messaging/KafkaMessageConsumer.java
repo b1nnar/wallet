@@ -20,10 +20,12 @@ public class KafkaMessageConsumer<T> implements MessageConsumer<T> {
     private static final Duration POLL_DURATION = Duration.ofMillis(1000);
 
     private final Consumer<String, T> kafkaConsumer;
+    private final String consumerGroupId;
     private final String topic;
 
     public KafkaMessageConsumer(KafkaMessageConsumerConfig config, Deserializer<T> messageDeserializer) {
-        this.kafkaConsumer = createKafkaConsumer(config, messageDeserializer, config.getTopic());
+        this.kafkaConsumer = createKafkaConsumer(config, messageDeserializer);
+        this.consumerGroupId = config.getConsumerGroupId();
         this.topic = config.getTopic();
     }
 
@@ -31,8 +33,8 @@ public class KafkaMessageConsumer<T> implements MessageConsumer<T> {
     public Optional<T> poll() {
         ConsumerRecords<String, T> records = kafkaConsumer.poll(POLL_DURATION);
         if (records.count() > 1) {
-            throw new MessagingException(
-                    String.format("Consumer with id %s from topic %s consumed more than 1 message", kafkaConsumer.groupMetadata().groupId(), topic));
+            throw new MessageConsumerException(
+                    String.format("Consumer with id %s from topic %s consumed more than 1 message", consumerGroupId, topic));
         }
         return StreamSupport.stream(records.records(topic).spliterator(), false)
                 .findFirst()
@@ -49,7 +51,7 @@ public class KafkaMessageConsumer<T> implements MessageConsumer<T> {
         kafkaConsumer.close();
     }
 
-    private Consumer<String, T> createKafkaConsumer(KafkaMessageConsumerConfig config, Deserializer<T> messageDeserializer, String topic) {
+    private Consumer<String, T> createKafkaConsumer(KafkaMessageConsumerConfig config, Deserializer<T> messageDeserializer) {
         Properties consumerProperties = new Properties();
         consumerProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, config.getBrokerAddress());
         consumerProperties.put(ConsumerConfig.GROUP_ID_CONFIG, config.getConsumerGroupId());
@@ -58,7 +60,7 @@ public class KafkaMessageConsumer<T> implements MessageConsumer<T> {
         consumerProperties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         Consumer<String, T> kafkaConsumer = new KafkaConsumer<>(consumerProperties, STRING_DESERIALIZER, messageDeserializer);
-        kafkaConsumer.subscribe(Collections.singletonList(topic));
+        kafkaConsumer.subscribe(Collections.singletonList(config.getTopic()));
 
         return kafkaConsumer;
     }

@@ -13,9 +13,9 @@
     <name>Iron Sheep Wallet</name>
 
     <modules>
+        <module>iron-sheep-wallet-domain</module>
         <module>iron-sheep-wallet-s1</module>
         <module>iron-sheep-wallet-s2</module>
-        <module>iron-sheep-wallet-domain</module>
     </modules>
 
     <properties>
@@ -23,6 +23,7 @@
         <java.version>1.8</java.version>
 
         <jersey.version>2.33</jersey.version>
+        <kafka-clients.version>2.7.0</kafka-clients.version>
     </properties>
 
     <dependencies>
@@ -46,6 +47,11 @@
                 <version>${jersey.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>${kafka-clients.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
