@@ -1,18 +1,9 @@
 package ro.alexandru.wallet;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import ro.alexandru.wallet.s1.messaging.KafkaMessageProducer;
-import ro.alexandru.wallet.s1.messaging.KafkaMessageProducerConfig;
-import ro.alexandru.wallet.s1.messaging.MessageProducer;
-import ro.alexandru.wallet.s1.messaging.MessageProducerException;
 
 import java.net.URI;
-import java.util.Properties;
 
 public class App {
 

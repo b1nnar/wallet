@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import ro.alexandru.wallet.domain.model.Wallet;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

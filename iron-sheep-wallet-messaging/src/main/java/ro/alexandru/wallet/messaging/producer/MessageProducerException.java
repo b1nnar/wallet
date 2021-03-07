@@ -1,4 +1,4 @@
-package ro.alexandru.wallet.s1.messaging;
+package ro.alexandru.wallet.messaging.producer;
 
 public class MessageProducerException extends Exception {
 

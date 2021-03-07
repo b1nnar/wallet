@@ -1,4 +1,4 @@
-package ro.alexandru.wallet.s1.messaging;
+package ro.alexandru.wallet.messaging.producer;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -8,7 +8,6 @@ import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ro.alexandru.wallet.WalletBalanceResource;
 
 import java.util.Properties;
 import java.util.UUID;
@@ -16,7 +15,8 @@ import java.util.UUID;
 public class KafkaMessageProducer<T> implements MessageProducer<T> {
 
     public static final Serializer<String> STRING_SERIALIZER = new StringSerializer();
-    private static final Logger LOG = LoggerFactory.getLogger(WalletBalanceResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(KafkaMessageProducer.class);
+
     private final Producer<String, T> kafkaProducer;
     private final String topic;
     private final String messageKey;

@@ -14,6 +14,7 @@
 
     <modules>
         <module>iron-sheep-wallet-domain</module>
+        <module>iron-sheep-wallet-messaging</module>
         <module>iron-sheep-wallet-s1</module>
         <module>iron-sheep-wallet-s2</module>
     </modules>
@@ -41,6 +42,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>ro.alexandru</groupId>
+                <artifactId>iron-sheep-wallet-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ro.alexandru</groupId>
+                <artifactId>iron-sheep-wallet-messaging</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.glassfish.jersey</groupId>
                 <artifactId>jersey-bom</artifactId>

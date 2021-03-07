@@ -1,12 +1,12 @@
 package ro.alexandru.wallet.s2;
 
-import ro.alexandru.wallet.s2.messaging.KafkaMessageConsumer;
-import ro.alexandru.wallet.s2.messaging.KafkaMessageConsumerConfig;
-import ro.alexandru.wallet.s2.messaging.MessageConsumer;
-import ro.alexandru.wallet.s2.messaging.MessageConsumerProcess;
-import ro.alexandru.wallet.s2.messaging.MessageProcessor;
+import ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumer;
+import ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumerConfig;
+import ro.alexandru.wallet.messaging.consumer.MessageConsumer;
+import ro.alexandru.wallet.messaging.consumer.MessageConsumerProcess;
+import ro.alexandru.wallet.messaging.consumer.MessageProcessor;
 
-import static ro.alexandru.wallet.s2.messaging.KafkaMessageConsumer.STRING_DESERIALIZER;
+import static ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumer.STRING_DESERIALIZER;
 
 public class MessagingApp {
 

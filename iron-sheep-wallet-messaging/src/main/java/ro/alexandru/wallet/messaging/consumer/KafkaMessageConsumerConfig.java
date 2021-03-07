@@ -1,4 +1,4 @@
-package ro.alexandru.wallet.s2.messaging;
+package ro.alexandru.wallet.messaging.consumer;
 
 public class KafkaMessageConsumerConfig {
 

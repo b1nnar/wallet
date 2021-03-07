@@ -5,26 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>iron-sheep-wallet</artifactId>
         <groupId>ro.alexandru</groupId>
+        <artifactId>iron-sheep-wallet</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>iron-sheep-wallet-s2</artifactId>
+    <artifactId>iron-sheep-wallet-messaging</artifactId>
 
-    <name>Iron Sheep Wallet - Service 2</name>
+    <name>Iron Sheep Wallet - Messaging</name>
 
     <properties>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>ro.alexandru</groupId>
-            <artifactId>iron-sheep-wallet-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ro.alexandru</groupId>
-            <artifactId>iron-sheep-wallet-messaging</artifactId>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
         </dependency>
     </dependencies>
 

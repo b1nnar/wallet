@@ -19,6 +19,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>ro.alexandru</groupId>
+            <artifactId>iron-sheep-wallet-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ro.alexandru</groupId>
+            <artifactId>iron-sheep-wallet-messaging</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-jdk-http</artifactId>
         </dependency>

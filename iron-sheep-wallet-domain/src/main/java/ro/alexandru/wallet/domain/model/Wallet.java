@@ -1,4 +1,4 @@
-package ro.alexandru.wallet;
+package ro.alexandru.wallet.domain.model;
 
 import java.math.BigDecimal;
 
