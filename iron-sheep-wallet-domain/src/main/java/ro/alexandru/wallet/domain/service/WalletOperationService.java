@@ -1,9 +1,9 @@
 package ro.alexandru.wallet.domain.service;
 
-import io.vavr.control.Validation;
 import ro.alexandru.wallet.domain.model.Wallet;
 import ro.alexandru.wallet.domain.model.event.WalletOperation;
 import ro.alexandru.wallet.domain.model.event.WalletOperationError;
+import ro.alexandru.wallet.domain.model.event.WalletOperationResult;
 import ro.alexandru.wallet.domain.model.event.WalletOperationSuccess;
 
 import java.math.BigDecimal;
@@ -11,35 +11,56 @@ import java.math.BigDecimal;
 import static ro.alexandru.wallet.domain.service.WalletOperationErrorCatalog.debitOperationExceedsBalance;
 import static ro.alexandru.wallet.domain.service.WalletOperationErrorCatalog.negativeOperationAmount;
 import static ro.alexandru.wallet.domain.service.WalletOperationErrorCatalog.unrecognizedWalletOperationType;
+import static ro.alexandru.wallet.domain.service.WalletOperationErrorCatalog.walletNotFound;
 
 public class WalletOperationService {
 
-    public Validation<WalletOperationError, WalletOperationSuccess> apply(Wallet wallet, WalletOperation walletOperation) {
-        if (walletOperation.getAmount().signum() < 0) {
-            return Validation.invalid(negativeOperationAmount(walletOperation));
-        }
+    public WalletOperationResult apply(Wallet wallet, WalletOperation walletOperation) {
         switch (walletOperation.getType()) {
+            case GET:
+                return success(walletOperation, wallet.getBalance());
             case DEBIT:
-                return debit(walletOperation, wallet.getBalance());
+                return debit(walletOperation, wallet);
             case CREDIT:
-                return credit(walletOperation, wallet.getBalance());
+                return credit(walletOperation, wallet);
             default:
-                return Validation.invalid(unrecognizedWalletOperationType(walletOperation));
+                return error(walletOperation, unrecognizedWalletOperationType(walletOperation));
         }
     }
 
-    private Validation<WalletOperationError, WalletOperationSuccess> debit(WalletOperation walletOperation, BigDecimal currentBalance) {
-        if (currentBalance.compareTo(walletOperation.getAmount()) < 0) {
-            return Validation.invalid(debitOperationExceedsBalance(walletOperation, currentBalance));
+    private WalletOperationResult get(WalletOperation walletOperation, Wallet wallet) {
+        if (wallet == null) {
+            return error(walletOperation, walletNotFound(walletOperation));
         }
-        return valid(walletOperation, currentBalance.subtract(walletOperation.getAmount()));
+        return success(walletOperation, wallet.getBalance());
     }
 
-    private Validation<WalletOperationError, WalletOperationSuccess> credit(WalletOperation walletOperation, BigDecimal currentBalance) {
-        return valid(walletOperation, currentBalance.add(walletOperation.getAmount()));
+    private WalletOperationResult debit(WalletOperation walletOperation, Wallet wallet) {
+        if (wallet == null) {
+            return error(walletOperation, walletNotFound(walletOperation));
+        }
+        if (walletOperation.getAmount().signum() < 0) {
+            return error(walletOperation, negativeOperationAmount(walletOperation));
+        }
+        if (wallet.getBalance().compareTo(walletOperation.getAmount()) < 0) {
+            return error(walletOperation, debitOperationExceedsBalance(walletOperation, wallet.getBalance()));
+        }
+        return success(walletOperation, wallet.getBalance().subtract(walletOperation.getAmount()));
     }
 
-    private Validation<WalletOperationError, WalletOperationSuccess> valid(WalletOperation walletOperation, BigDecimal newBalance) {
-        return Validation.valid(WalletOperationSuccess.from(walletOperation, newBalance));
+    private WalletOperationResult credit(WalletOperation walletOperation, Wallet wallet) {
+        if (walletOperation.getAmount().signum() < 0) {
+            return error(walletOperation, negativeOperationAmount(walletOperation));
+        }
+        BigDecimal currentBalance = (wallet == null) ? BigDecimal.ZERO : wallet.getBalance();
+        return success(walletOperation, currentBalance.add(walletOperation.getAmount()));
+    }
+
+    private WalletOperationResult success(WalletOperation walletOperation, BigDecimal balance) {
+        return WalletOperationResult.success(walletOperation.getType(), new WalletOperationSuccess(walletOperation.getWalletId(), balance));
+    }
+
+    private WalletOperationResult error(WalletOperation walletOperation, WalletOperationError walletOperationError) {
+        return WalletOperationResult.error(walletOperation.getType(), walletOperationError);
     }
 }

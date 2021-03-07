@@ -7,25 +7,14 @@ import java.math.BigDecimal;
 
 public class WalletOperationSuccess {
 
-    private final WalletOperationType type;
     private final String walletId;
     private final BigDecimal balance;
 
     @JsonCreator
-    public WalletOperationSuccess(@JsonProperty("type") WalletOperationType type,
-                                  @JsonProperty("walletId") String walletId,
-                                  @JsonProperty("balance") BigDecimal balance) {
-        this.type = type;
+    public WalletOperationSuccess(@JsonProperty("walletId") String walletId,
+                                  @JsonProperty("newBalance") BigDecimal balance) {
         this.walletId = walletId;
         this.balance = balance;
-    }
-
-    public static WalletOperationSuccess from(WalletOperation walletOperation, BigDecimal balance) {
-        return new WalletOperationSuccess(walletOperation.getType(), walletOperation.getWalletId(), balance);
-    }
-
-    public WalletOperationType getType() {
-        return type;
     }
 
     public String getWalletId() {
@@ -39,8 +28,7 @@ public class WalletOperationSuccess {
     @Override
     public String toString() {
         return "WalletOperationSuccess{" +
-                "type=" + type +
-                ", walletId='" + walletId + '\'' +
+                "walletId='" + walletId + '\'' +
                 ", balance=" + balance +
                 '}';
     }
