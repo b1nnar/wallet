@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WalletOperationError {
 
-    private WalletOperationErrorType type;
-    private String error;
+    private final WalletOperationErrorType type;
+    private final String error;
 
     @JsonCreator
     public WalletOperationError(@JsonProperty("type") WalletOperationErrorType type,
@@ -15,23 +15,19 @@ public class WalletOperationError {
         this.error = error;
     }
 
-    public static WalletOperationError from(WalletOperationErrorType type, String error) {
-        return new WalletOperationError(type, error);
-    }
-
     public WalletOperationErrorType getType() {
         return type;
-    }
-
-    public void setType(WalletOperationErrorType type) {
-        this.type = type;
     }
 
     public String getError() {
         return error;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    @Override
+    public String toString() {
+        return "WalletOperationError{" +
+                "type=" + type +
+                ", error='" + error + '\'' +
+                '}';
     }
 }

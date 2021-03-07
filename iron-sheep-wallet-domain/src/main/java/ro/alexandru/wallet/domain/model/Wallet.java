@@ -7,6 +7,9 @@ public class Wallet {
     private String id;
     private BigDecimal balance;
 
+    public Wallet() {
+    }
+
     public Wallet(String id, BigDecimal balance) {
         this.id = id;
         this.balance = balance;
