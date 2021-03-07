@@ -1,5 +1,8 @@
 package ro.alexandru.wallet.domain.model.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class WalletOperationSuccess {
@@ -8,7 +11,10 @@ public class WalletOperationSuccess {
     private String walletId;
     private BigDecimal balance;
 
-    public WalletOperationSuccess(WalletOperationType type, String walletId, BigDecimal balance) {
+    @JsonCreator
+    public WalletOperationSuccess(@JsonProperty("type") WalletOperationType type,
+                                  @JsonProperty("walletId") String walletId,
+                                  @JsonProperty("balance") BigDecimal balance) {
         this.type = type;
         this.walletId = walletId;
         this.balance = balance;

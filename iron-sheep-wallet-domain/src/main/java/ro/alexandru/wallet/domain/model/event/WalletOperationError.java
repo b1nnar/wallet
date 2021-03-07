@@ -1,11 +1,16 @@
 package ro.alexandru.wallet.domain.model.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class WalletOperationError {
 
     private WalletOperationErrorType type;
     private String error;
 
-    public WalletOperationError(WalletOperationErrorType type, String error) {
+    @JsonCreator
+    public WalletOperationError(@JsonProperty("type") WalletOperationErrorType type,
+                                @JsonProperty("error") String error) {
         this.type = type;
         this.error = error;
     }

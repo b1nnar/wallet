@@ -1,14 +1,20 @@
 package ro.alexandru.wallet.domain.model.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class WalletOperation {
 
-    private WalletOperationType type;
-    private String walletId;
-    private BigDecimal amount;
+    private final WalletOperationType type;
+    private final String walletId;
+    private final BigDecimal amount;
 
-    public WalletOperation(WalletOperationType type, String walletId, BigDecimal amount) {
+    @JsonCreator
+    public WalletOperation(@JsonProperty("type") WalletOperationType type,
+                           @JsonProperty("walletId") String walletId,
+                           @JsonProperty("amount") BigDecimal amount) {
         this.type = type;
         this.walletId = walletId;
         this.amount = amount;
@@ -18,23 +24,20 @@ public class WalletOperation {
         return type;
     }
 
-    public void setType(WalletOperationType type) {
-        this.type = type;
-    }
-
     public String getWalletId() {
         return walletId;
-    }
-
-    public void setWalletId(String walletId) {
-        this.walletId = walletId;
     }
 
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    @Override
+    public String toString() {
+        return "WalletOperation{" +
+                "type=" + type +
+                ", walletId='" + walletId + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 }

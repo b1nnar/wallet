@@ -1,4 +1,4 @@
-package ro.alexandru.wallet;
+package ro.alexandru.wallet.rest;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 

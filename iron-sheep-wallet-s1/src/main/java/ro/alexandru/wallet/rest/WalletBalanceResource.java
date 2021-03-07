@@ -1,4 +1,4 @@
-package ro.alexandru.wallet;
+package ro.alexandru.wallet.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
