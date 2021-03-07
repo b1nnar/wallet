@@ -4,13 +4,11 @@ import java.math.BigDecimal;
 
 public class Wallet {
 
-    private final String id;
-    private final String name;
-    private final BigDecimal balance;
+    private String id;
+    private BigDecimal balance;
 
-    public Wallet(String id, String name, BigDecimal balance) {
+    public Wallet(String id, BigDecimal balance) {
         this.id = id;
-        this.name = name;
         this.balance = balance;
     }
 
@@ -18,11 +16,15 @@ public class Wallet {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }
