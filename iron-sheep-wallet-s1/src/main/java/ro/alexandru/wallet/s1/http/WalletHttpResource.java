@@ -5,13 +5,10 @@ import org.slf4j.LoggerFactory;
 import ro.alexandru.wallet.domain.model.Wallet;
 import ro.alexandru.wallet.domain.model.event.WalletOperation;
 import ro.alexandru.wallet.domain.model.event.WalletOperationType;
-import ro.alexandru.wallet.messaging.producer.KafkaMessageProducer;
-import ro.alexandru.wallet.messaging.producer.KafkaMessageProducerConfig;
-import ro.alexandru.wallet.messaging.producer.MessageProducer;
 import ro.alexandru.wallet.messaging.producer.MessageProducerException;
-import ro.alexandru.wallet.messaging.serializer.JSONSerializer;
 import ro.alexandru.wallet.s1.http.exception.HttpOperationException;
 import ro.alexandru.wallet.s1.http.model.UpdateWalletBalanceRequest;
+import ro.alexandru.wallet.s1.messaging.WalletOperationMessageProducer;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -27,13 +24,6 @@ import java.math.BigDecimal;
 public class WalletHttpResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(WalletHttpResource.class);
-
-    private static final MessageProducer<WalletOperation> MESSAGE_PRODUCER = new KafkaMessageProducer<>(
-            new KafkaMessageProducerConfig(
-                    "localhost:9092", "s1-producer", "TOPIC.S1.01"
-            ),
-            new JSONSerializer<>()
-    );
 
     @GET
     @Path("{id}")
@@ -66,7 +56,7 @@ public class WalletHttpResource {
 
     private void sendWalletOperationEvent(WalletOperation walletOperation) {
         try {
-            MESSAGE_PRODUCER.send(walletOperation);
+            WalletOperationMessageProducer.getInstance().send(walletOperation);
         } catch (MessageProducerException e) {
             throw new HttpOperationException("Error performing wallet operation of type " + walletOperation.getType(), e);
         }

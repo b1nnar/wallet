@@ -32,7 +32,7 @@ public class S1App {
 
     private static void createAndStartMessageConsumerProcess() {
         KafkaMessageConsumerConfig kafkaMessageConsumerConfig = new KafkaMessageConsumerConfig(
-                "localhost:9092", "s1-consumer", "TOPIC.S2"
+                "localhost:9092", "s1-consumer", "TOPIC.S2.01"
         );
 
         MessageConsumer<WalletOperation> messageConsumer = new KafkaMessageConsumer<>(kafkaMessageConsumerConfig, new JSONDeserializer<>(WalletOperation.class));
