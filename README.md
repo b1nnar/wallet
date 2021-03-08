@@ -28,11 +28,11 @@ CONSTRAINT   wallet_pkey   PRIMARY KEY (id)
 
 ###Run Apps
 ```
-java -jar iron-sheep-wallet-s1-1.0.0-SNAPSHOT-shaded.jar
+java -jar bin/iron-sheep-wallet-s1-1.0.0-SNAPSHOT-shaded.jar
 ```
 then, in another terminal window
 ```
-java -jar iron-sheep-wallet-s2-1.0.0-SNAPSHOT-shaded.jar
+java -jar bin/iron-sheep-wallet-s2-1.0.0-SNAPSHOT-shaded.jar
 ```
 
 HTTP service WADL should be available at `http://localhost:8080/application.wadl`
