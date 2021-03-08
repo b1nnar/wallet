@@ -1,7 +1,5 @@
 package ro.alexandru.wallet.s2;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ro.alexandru.wallet.domain.model.event.WalletOperation;
 import ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumer;
 import ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumerConfig;
