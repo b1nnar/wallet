@@ -7,7 +7,8 @@ import ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumerConfig;
 import ro.alexandru.wallet.messaging.consumer.MessageConsumer;
 import ro.alexandru.wallet.messaging.serializer.JSONDeserializer;
 
-import static ro.alexandru.wallet.messaging.Topics.S2_TOPIC;
+import static ro.alexandru.wallet.messaging.Messaging.BROKER_ADDRESS;
+import static ro.alexandru.wallet.messaging.Messaging.S2_TOPIC;
 
 public class WalletOperationResultMessageConsumer extends KafkaMessageConsumer<WalletOperationResult> {
 
@@ -20,7 +21,7 @@ public class WalletOperationResultMessageConsumer extends KafkaMessageConsumer<W
     synchronized public static MessageConsumer<WalletOperationResult> getInstance() {
         if (messageConsumer == null) {
             messageConsumer = new KafkaMessageConsumer<>(new KafkaMessageConsumerConfig(
-                    "localhost:9092", "s1-consumer", S2_TOPIC
+                    BROKER_ADDRESS, "s1-consumer", S2_TOPIC
             ), new JSONDeserializer<>(WalletOperationResult.class));
         }
         return messageConsumer;

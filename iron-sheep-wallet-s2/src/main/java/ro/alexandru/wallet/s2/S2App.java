@@ -9,7 +9,8 @@ import ro.alexandru.wallet.messaging.consumer.MessageProcessor;
 import ro.alexandru.wallet.messaging.serializer.JSONDeserializer;
 import ro.alexandru.wallet.s2.processor.WalletOperationMessageProcessor;
 
-import static ro.alexandru.wallet.messaging.Topics.S1_TOPIC;
+import static ro.alexandru.wallet.messaging.Messaging.BROKER_ADDRESS;
+import static ro.alexandru.wallet.messaging.Messaging.S1_TOPIC;
 
 public class S2App {
 
@@ -19,7 +20,7 @@ public class S2App {
 
     private static void createAndStartMessageConsumerProcess() {
         KafkaMessageConsumerConfig kafkaMessageConsumerConfig = new KafkaMessageConsumerConfig(
-                "localhost:9092", "s2-consumer", S1_TOPIC
+                BROKER_ADDRESS, "s2-consumer", S1_TOPIC
         );
 
         MessageConsumer<WalletOperation> messageConsumer = new KafkaMessageConsumer<>(kafkaMessageConsumerConfig, new JSONDeserializer<>(WalletOperation.class));

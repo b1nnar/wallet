@@ -7,7 +7,8 @@ import ro.alexandru.wallet.messaging.producer.KafkaMessageProducerConfig;
 import ro.alexandru.wallet.messaging.producer.MessageProducer;
 import ro.alexandru.wallet.messaging.serializer.JSONSerializer;
 
-import static ro.alexandru.wallet.messaging.Topics.S1_TOPIC;
+import static ro.alexandru.wallet.messaging.Messaging.BROKER_ADDRESS;
+import static ro.alexandru.wallet.messaging.Messaging.S1_TOPIC;
 
 public class WalletOperationMessageProducer extends KafkaMessageProducer<WalletOperation> {
 
@@ -21,7 +22,7 @@ public class WalletOperationMessageProducer extends KafkaMessageProducer<WalletO
         if (messageProducer == null) {
             messageProducer = new WalletOperationMessageProducer(
                     new KafkaMessageProducerConfig(
-                            "localhost:9092", "s1-producer", S1_TOPIC
+                            BROKER_ADDRESS, "s1-producer", S1_TOPIC
                     ),
                     new JSONSerializer<>()
             );
