@@ -1,5 +1,7 @@
 package ro.alexandru.wallet.s2.processor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ro.alexandru.wallet.domain.model.Wallet;
 import ro.alexandru.wallet.domain.model.event.WalletOperation;
 import ro.alexandru.wallet.domain.model.event.WalletOperationResult;
@@ -14,6 +16,8 @@ import static ro.alexandru.wallet.domain.model.event.WalletOperationType.GET;
 
 public class WalletOperationMessageProcessor implements MessageProcessor<WalletOperation> {
 
+    private static final Logger LOG = LoggerFactory.getLogger(WalletOperationMessageProcessor.class);
+
     private final WalletOperationService walletOperationService;
     private final WalletRepository walletRepository;
 
@@ -24,6 +28,8 @@ public class WalletOperationMessageProcessor implements MessageProcessor<WalletO
 
     @Override
     public void process(WalletOperation walletOperation) {
+        LOG.info("Processing wallet operation request {}", walletOperation);
+
         Wallet wallet = walletRepository.getWallet(walletOperation.getWalletId());
         WalletOperationResult result = walletOperationService.apply(wallet, walletOperation);
 
@@ -34,6 +40,8 @@ public class WalletOperationMessageProcessor implements MessageProcessor<WalletO
     }
 
     private void sendWalletOperationResultEvent(WalletOperationResult walletOperationResult) {
+        LOG.info("Sending wallet operation result {}", walletOperationResult);
+
         try {
             WalletOperationResultMessageProducer.getInstance().send(walletOperationResult);
         } catch (MessageProducerException e) {

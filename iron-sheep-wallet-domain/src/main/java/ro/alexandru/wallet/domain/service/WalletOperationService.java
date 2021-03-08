@@ -18,7 +18,7 @@ public class WalletOperationService {
     public WalletOperationResult apply(Wallet wallet, WalletOperation walletOperation) {
         switch (walletOperation.getType()) {
             case GET:
-                return success(walletOperation, wallet.getBalance());
+                return get(walletOperation, wallet);
             case DEBIT:
                 return debit(walletOperation, wallet);
             case CREDIT:

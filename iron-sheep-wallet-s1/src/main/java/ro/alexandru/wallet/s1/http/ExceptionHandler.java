@@ -10,9 +10,11 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class ExceptionHandler implements ExceptionMapper<Exception> {
 
+    private static final int INTERNAL_SERVER_ERROR = 500;
+
     @Override
     public Response toResponse(Exception e) {
-        return Response.status(500)
+        return Response.status(INTERNAL_SERVER_ERROR)
                 .entity(ExceptionUtils.getStackTrace(e))
                 .type(MediaType.TEXT_PLAIN)
                 .build();

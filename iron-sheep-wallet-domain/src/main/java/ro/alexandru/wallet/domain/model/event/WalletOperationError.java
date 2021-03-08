@@ -5,8 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WalletOperationError {
 
-    private final WalletOperationErrorType type;
-    private final String error;
+    private WalletOperationErrorType type;
+    private String error;
+
+    public WalletOperationError() {
+    }
 
     @JsonCreator
     public WalletOperationError(@JsonProperty("type") WalletOperationErrorType type,

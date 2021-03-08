@@ -4,13 +4,6 @@ import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ro.alexandru.wallet.domain.model.event.WalletOperationResult;
-import ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumer;
-import ro.alexandru.wallet.messaging.consumer.KafkaMessageConsumerConfig;
-import ro.alexandru.wallet.messaging.consumer.MessageConsumer;
-import ro.alexandru.wallet.messaging.consumer.MessageConsumerProcess;
-import ro.alexandru.wallet.messaging.consumer.MessageProcessor;
-import ro.alexandru.wallet.messaging.serializer.JSONDeserializer;
 
 import java.net.URI;
 
@@ -20,7 +13,6 @@ public class S1App {
 
     public static void main(String[] args) {
         createAndStartHttpServer();
-        createAndStartMessageConsumerProcess();
     }
 
     private static void createAndStartHttpServer() {
@@ -28,17 +20,5 @@ public class S1App {
         ResourceConfig config = new ResourceConfig().packages("ro.alexandru.wallet.s1.http");
         JdkHttpServerFactory.createHttpServer(baseUri, config);
         LOG.info("S1 HTTP Server started. WADL location: `{}application.wadl`", baseUri);
-    }
-
-    private static void createAndStartMessageConsumerProcess() {
-        KafkaMessageConsumerConfig kafkaMessageConsumerConfig = new KafkaMessageConsumerConfig(
-                "localhost:9092", "s1-consumer", "TOPIC.S2.01"
-        );
-
-        MessageConsumer<WalletOperationResult> messageConsumer = new KafkaMessageConsumer<>(kafkaMessageConsumerConfig, new JSONDeserializer<>(WalletOperationResult.class));
-        MessageProcessor<WalletOperationResult> messageProcessor = value -> LOG.info("S1 Consumer processed value: `{}`", value);
-        MessageConsumerProcess<WalletOperationResult> messageConsumerProcess = new MessageConsumerProcess<>("S1 Consumer", messageConsumer, messageProcessor);
-
-        messageConsumerProcess.start();
     }
 }

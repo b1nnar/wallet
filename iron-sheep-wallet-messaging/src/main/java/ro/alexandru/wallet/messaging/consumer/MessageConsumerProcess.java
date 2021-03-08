@@ -50,7 +50,12 @@ public class MessageConsumerProcess<T> {
 
     private void consumeAndProcessNextMessage() {
         Optional<T> message = messageConsumer.poll();
-        message.ifPresent(messageProcessor::process);
+        try {
+            message.ifPresent(messageProcessor::process);
+        } catch (Exception e) {
+            LOG.error("Could not process consumed message {}", message.get());
+            throw new MessageConsumerException("Could not process consumed message " + message.get(), e);
+        }
         messageConsumer.commit();
     }
 }
