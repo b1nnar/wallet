@@ -1,7 +1,7 @@
 
-###Setup
+### Setup
 
-####Apache Kafka
+#### Apache Kafka
 Download and unzip Apache Kafka 2.7.0 (`kafka_2.13-2.7.0.tgz`) from https://kafka.apache.org/downloads.
 Go to Kafka directory and run:
 ```
@@ -12,7 +12,7 @@ then, in another terminal window
 bin/kafka-server-start.sh config/server.properties
 ```
 
-####PostgreSQL
+#### PostgreSQL
 Download and install PostgreSQL 13 from https://www.postgresql.org/download/.
 Start postgresql and make sure is running on `localhost:5434`.
 Make sure password for user `postgres` is `postgres`.
@@ -26,7 +26,7 @@ CONSTRAINT   wallet_pkey   PRIMARY KEY (id)
 );
 ```
 
-###Run Apps
+### Run Apps
 ```
 java -jar bin/iron-sheep-wallet-s1-1.0.0-SNAPSHOT-shaded.jar
 ```
